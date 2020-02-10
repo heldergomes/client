@@ -42,7 +42,7 @@ class ControllerBusinessTest {
         ControllerBusiness controller = new ControllerBusiness(mapperBusiness, registerBusiness);
 
         Exception exception = assertThrows(
-                IdConsumerInvalidException.class,
+                InvalidIdConsumerException.class,
                 () -> controller.createBusiness(BusinessDTOTest.newBusinessDTORight(), null)
         );
         assertEquals("Id consumer cannot be null", exception.getMessage());

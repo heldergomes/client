@@ -7,16 +7,16 @@ import java.util.UUID;
 @Component
 public class RegisterConsumer {
 
-    private CreateNewConsumer createNewConsumer;
+    private CreateNewConsumerPort createNewConsumerPort;
 
-    public RegisterConsumer(CreateNewConsumer createNewConsumer){
-        this.createNewConsumer = createNewConsumer;
+    public RegisterConsumer(CreateNewConsumerPort createNewConsumerPort){
+        this.createNewConsumerPort = createNewConsumerPort;
     }
 
     public UUID registerNewConsumer(Consumer consumer){
         consumer.isRightPassword();
         consumer.generateDateTimeCreateConsumer();
 
-        return createNewConsumer.createNewConsumer(consumer);
+        return createNewConsumerPort.createNewConsumer(consumer);
     }
 }

@@ -14,7 +14,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @DisplayName("Testing Consumer Adapter")
-public class ConsumerAdapterTest {
+class ConsumerAdapterTest {
 
     @Mock
     private ConsumerMapper mapper;
@@ -23,7 +23,7 @@ public class ConsumerAdapterTest {
 
     @DisplayName("When persist one new Consumer then return one Id Consumer")
     @Test
-    public void WhenCreateNewConsumerThenReturnUUIDConsumer(){
+    void WhenCreateNewConsumerThenReturnUUIDConsumer(){
         MockitoAnnotations.initMocks(this);
         ConsumerEntity consumerEntity = ConsumerEntityTest.newConsumerEntity();
         when(mapper.toConsumerEntity(any(Consumer.class))).thenReturn(consumerEntity);
@@ -34,4 +34,5 @@ public class ConsumerAdapterTest {
 
         assertEquals(idConsumer, consumerEntity.getIdConsumer());
     }
+
 }

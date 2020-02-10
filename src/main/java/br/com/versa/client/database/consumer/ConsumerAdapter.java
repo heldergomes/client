@@ -1,14 +1,16 @@
 package br.com.versa.client.database.consumer;
 
+import br.com.versa.client.database.consumer.exception.ConsumerNonexistentException;
 import br.com.versa.client.domain.consumer.Consumer;
-import br.com.versa.client.domain.consumer.CreateNewConsumer;
-import br.com.versa.client.domain.consumer.ValidConsumerExist;
+import br.com.versa.client.domain.consumer.CreateNewConsumerPort;
+import br.com.versa.client.domain.consumer.ValidExistenceOfConsumerPort;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class ConsumerAdapter implements CreateNewConsumer, ValidConsumerExist {
+public class ConsumerAdapter implements CreateNewConsumerPort, ValidExistenceOfConsumerPort {
 
     private ConsumerMapper mapper;
     private ConsumerRepository repository;
@@ -27,7 +29,9 @@ public class ConsumerAdapter implements CreateNewConsumer, ValidConsumerExist {
 
     @Override
     public void validConsumerAlreadyExist(UUID id) {
-        repository.findById(id);
+        Optional<ConsumerEntity> consumerEntity = repository.findById(id);
+        if (consumerEntity.equals(Optional.empty()))
+            throw new ConsumerNonexistentException("Its necessary to have a consumer to create a new business");
     }
 
 }

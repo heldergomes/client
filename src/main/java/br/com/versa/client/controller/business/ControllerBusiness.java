@@ -30,6 +30,6 @@ public class ControllerBusiness {
 
     private void validIdConsumer(UUID idConsumer){
         if(idConsumer == null)
-            throw new IdConsumerInvalidException("Id consumer cannot be null");
+            throw new InvalidIdConsumerException("Id consumer cannot be null");
     }
 }

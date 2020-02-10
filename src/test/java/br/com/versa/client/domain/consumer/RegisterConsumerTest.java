@@ -1,5 +1,6 @@
 package br.com.versa.client.domain.consumer;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -9,20 +10,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-public class RegisterConsumerTest {
+@DisplayName("Testing Register Consumer Usecase")
+class RegisterConsumerTest {
 
     @Mock
-    private CreateNewConsumer createNewConsumer;
+    private CreateNewConsumerPort createNewConsumerPort;
     @Mock
     private Consumer consumer;
 
+    @DisplayName("When register an new consumer then return your Id")
     @Test
-    public void whenRegisterNewConsumerThenReturnIdConsumer(){
+    void whenRegisterNewConsumerThenReturnIdConsumer(){
         MockitoAnnotations.initMocks(this);
         UUID idConsumer = UUID.randomUUID();
-        when(createNewConsumer.createNewConsumer(any(Consumer.class))).thenReturn(idConsumer);
+        when(createNewConsumerPort.createNewConsumer(any(Consumer.class))).thenReturn(idConsumer);
 
-        RegisterConsumer registerConsumer = new RegisterConsumer(createNewConsumer);
+        RegisterConsumer registerConsumer = new RegisterConsumer(createNewConsumerPort);
         UUID expectedIdConsumer = registerConsumer.registerNewConsumer(consumer);
 
         assertEquals(idConsumer, expectedIdConsumer);

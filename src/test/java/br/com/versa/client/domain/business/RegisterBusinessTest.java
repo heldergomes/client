@@ -1,6 +1,7 @@
 package br.com.versa.client.domain.business;
 
-import br.com.versa.client.domain.consumer.Consumer;
+import br.com.versa.client.domain.consumer.ValidExistenceOfConsumerPort;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -11,20 +12,23 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-public class RegisterBusinessTest {
+@DisplayName("Testing Register Business Usecase")
+class RegisterBusinessTest {
 
     @Mock
-    private Consumer consumer;
+    private CreateNewBusinessPort createNewBusinessPort;
     @Mock
-    private CreateNewBusiness createNewBusiness;
+    private ValidExistenceOfConsumerPort validExistenceOfConsumerPort;
 
+    @DisplayName("When register an new Business then need execute all steps")
     @Test
-    public void whenRegisterNewBusinessForConsumerThenNeedExecuteAllSteps(){
+    void whenRegisterNewBusinessForConsumerThenNeedExecuteAllSteps(){
         MockitoAnnotations.initMocks(this);
-        String idConsumer = String.valueOf(UUID.randomUUID());
-        RegisterBusiness registerBusiness = new RegisterBusiness();
+        UUID idConsumer = UUID.randomUUID();
+        Business business = BusinessTest.newBusinessWithoutIIUD();
+        RegisterBusiness registerBusiness = new RegisterBusiness(createNewBusinessPort, validExistenceOfConsumerPort);
+        registerBusiness.registerBusinessForConsumer(business, idConsumer);
 
-
-        verify(createNewBusiness, times(1)).createNewBusiness(any(Business.class));
+        verify(createNewBusinessPort, times(1)).createNewBusiness(any(Business.class));
     }
 }

@@ -9,11 +9,11 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Testing Business Mapper")
-public class DtoMapperBusinessTest {
+class DtoMapperBusinessTest {
 
     @DisplayName("When Converter one DTO to Business then return one Business Entity")
     @Test
-    public void whenConverterDtoToBusinessThenReturnBusiness(){
+    void whenConverterDtoToBusinessThenReturnBusiness(){
         DtoMapperBusiness mapper = new DtoMapperBusiness();
         Business business = mapper.toBusiness(BusinessDTOTest.newBusinessDTORight());
         Business expectBusiness = BusinessTest.newBusinessWithoutIIUD();

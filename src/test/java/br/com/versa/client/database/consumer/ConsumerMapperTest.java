@@ -9,11 +9,11 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Testing Consumer Mapper")
-public class ConsumerMapperTest {
+class ConsumerMapperTest {
 
-    @DisplayName("")
+    @DisplayName("When Mapper some consumer to Entity then return new entity")
     @Test
-    public void WhenMapperConsumerToConsumerEntityThenReturnNewConsumerEntity(){
+    void WhenMapperConsumerToConsumerEntityThenReturnNewConsumerEntity(){
         ConsumerMapper mapper = new ConsumerMapper();
         Consumer consumer = ConsumerTest.newConsumerWithoutIIUD();
         ConsumerEntity consumerEntity = mapper.toConsumerEntity(consumer);

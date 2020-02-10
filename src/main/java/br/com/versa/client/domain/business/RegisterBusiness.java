@@ -1,7 +1,7 @@
 package br.com.versa.client.domain.business;
 
-import br.com.versa.client.domain.consumer.ValidConsumer;
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.versa.client.domain.consumer.Consumer;
+import br.com.versa.client.domain.consumer.ValidExistenceOfConsumerPort;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -9,16 +9,18 @@ import java.util.UUID;
 @Component
 public class RegisterBusiness {
 
-    @Autowired
-    private ValidConsumer validConsumer;
-    @Autowired
-    private CreateNewBusiness createNewBusiness;
+    private CreateNewBusinessPort createNewBusinessPort;
+    private ValidExistenceOfConsumerPort validExistenceOfConsumerPort;
+
+    public RegisterBusiness(CreateNewBusinessPort createNewBusinessPort, ValidExistenceOfConsumerPort validExistenceOfConsumerPort){
+        this.createNewBusinessPort = createNewBusinessPort;
+        this.validExistenceOfConsumerPort = validExistenceOfConsumerPort;
+    }
 
     public void registerBusinessForConsumer(Business business, UUID idConsumer){
-
-        validConsumer.validConsumerExist(idConsumer);
-        createNewBusiness.createNewBusiness(business);
-
-
+        Consumer consumer = new Consumer(validExistenceOfConsumerPort);
+        consumer.setIdConsumer(idConsumer);
+        consumer.validExistenceOfConsumer();
+        createNewBusinessPort.createNewBusiness(business);
     }
 }

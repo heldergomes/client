@@ -1,37 +1,40 @@
 package br.com.versa.client.domain.consumer;
 
 import br.com.versa.client.domain.consumer.exception.InvalidConfirmPasswordException;
-import org.junit.Rule;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.rules.ExpectedException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.time.Month;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
+@DisplayName("Testing Consumer")
 public class ConsumerTest {
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
+    @Autowired
+    private static ValidExistenceOfConsumerPort validExistenceOfConsumerPort;
 
+    @DisplayName("When password of cosumer is diferent to confirm password then return exception")
     @Test
-    public void WhenPasswordIsDifferentToConfirmPasswordThenReturnInvalidConfirmPasswordException(){
-        thrown.expect(InvalidConfirmPasswordException.class);
-        thrown.expectMessage("The confirmPassword is different to password");
+    void WhenPasswordIsDifferentToConfirmPasswordThenReturnInvalidConfirmPasswordException(){
         Consumer consumer = newConsumerWithDifferentPassword();
-        consumer.isRightPassword();
+        Exception exception = assertThrows(InvalidConfirmPasswordException.class,
+                () -> consumer.isRightPassword());
+        assertEquals("The confirmPassword is different to password", exception.getMessage());
     }
 
+    @DisplayName("When generate a cunsumer's date-time then return something not null")
     @Test
-    public void WhenGenerateDateTimeCreateConsumerThenDateTimeCreatedConsumerShouldNotNull(){
+    void WhenGenerateDateTimeCreateConsumerThenDateTimeCreatedConsumerShouldNotNull(){
         Consumer consumer = newConsumerWithoutIIUDandDateTime();
         consumer.generateDateTimeCreateConsumer();
         assertNotNull(consumer.getDateTimeCreatedConsumer());
     }
 
     public static Consumer newConsumerWithDifferentPassword(){
-        Consumer consumer = new Consumer();
+        Consumer consumer = new Consumer(validExistenceOfConsumerPort);
         consumer.setFirstName("Helder");
         consumer.setLastName("Ardachnikoff");
         consumer.setLogin("tomate");
@@ -43,7 +46,7 @@ public class ConsumerTest {
     }
 
     public static Consumer newConsumerWithoutIIUD(){
-        Consumer consumer = new Consumer();
+        Consumer consumer = new Consumer(validExistenceOfConsumerPort);
         consumer.setFirstName("Helder");
         consumer.setLastName("Ardachnikoff");
         consumer.setLogin("tomate");
@@ -55,7 +58,7 @@ public class ConsumerTest {
     }
 
     public static Consumer newConsumerWithoutIIUDandDateTime(){
-        Consumer consumer = new Consumer();
+        Consumer consumer = new Consumer(validExistenceOfConsumerPort);
         consumer.setFirstName("Helder");
         consumer.setLastName("Ardachnikoff");
         consumer.setLogin("tomate");
