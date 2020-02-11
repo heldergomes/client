@@ -29,6 +29,6 @@ class RegisterBusinessTest {
         RegisterBusiness registerBusiness = new RegisterBusiness(createNewBusinessPort, validExistenceOfConsumerPort);
         registerBusiness.registerBusinessForConsumer(business, idConsumer);
 
-        verify(createNewBusinessPort, times(1)).createNewBusiness(any(Business.class));
+        verify(createNewBusinessPort, times(1)).createNewBusiness(any(Business.class), any(UUID.class));
     }
 }

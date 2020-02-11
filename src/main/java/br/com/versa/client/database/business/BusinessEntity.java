@@ -15,6 +15,7 @@ public class BusinessEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idBusiness;
+    private UUID idConsumer;
     private String name;
     private String cnpj;
 

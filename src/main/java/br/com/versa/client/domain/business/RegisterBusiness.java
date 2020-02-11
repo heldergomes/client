@@ -21,6 +21,6 @@ public class RegisterBusiness {
         Consumer consumer = new Consumer(validExistenceOfConsumerPort);
         consumer.setIdConsumer(idConsumer);
         consumer.validExistenceOfConsumer();
-        createNewBusinessPort.createNewBusiness(business);
+        createNewBusinessPort.createNewBusiness(business, consumer.getIdConsumer());
     }
 }

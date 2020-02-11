@@ -15,6 +15,7 @@ public class LocationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID IdLocation;
+    private UUID idBusiness;
     private String state;
     private String city;
     private String neighborhood;
