@@ -1,27 +1,27 @@
 package br.com.versa.client.database.business;
 
 import br.com.versa.client.database.business.location.LocationEntity;
-import br.com.versa.client.domain.business.Business;
-import br.com.versa.client.domain.business.BusinessTest;
-import br.com.versa.client.domain.business.Location;
-import br.com.versa.client.domain.business.LocationTest;
+import br.com.versa.client.domain.business.*;
+import br.com.versa.client.domain.entityutil.LocationUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
+import static br.com.versa.client.domain.entityutil.BusinessUtil.newBusiness;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Testing Business Mapper")
 public class BusinessMapperTest {
 
+
     @DisplayName("When Mapper some Business to Entity then return new entity")
     @Test
     void WhenMapperBusinessToBusinessEntityThenReturnNewBusinessEntity(){
         BusinessMapper mapper = new BusinessMapper();
         UUID idConsumer = UUID.randomUUID();
-        Business business = BusinessTest.newBusiness();
+        Business business = newBusiness();
         BusinessEntity businessEntity = mapper.toBusinessEntity(business, idConsumer);
 
         assertAll("businessEntity",
@@ -37,7 +37,7 @@ public class BusinessMapperTest {
     void WhenMapperLocationToLocationEntityThenReturnNewLocationEntity(){
         BusinessMapper mapper = new BusinessMapper();
         UUID idBusiness = UUID.randomUUID();
-        Location location = LocationTest.newLocation();
+        Location location = LocationUtil.newLocation();
         LocationEntity locationEntity = mapper.toLocationEntity(location,idBusiness);
 
         assertAll("locationEntity",

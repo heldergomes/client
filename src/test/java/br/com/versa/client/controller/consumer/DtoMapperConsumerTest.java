@@ -5,6 +5,7 @@ import br.com.versa.client.domain.consumer.ConsumerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static br.com.versa.client.domain.entityutil.ConsumerUtil.newConsumerWithoutIIUDandDateTime;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -16,7 +17,7 @@ class DtoMapperConsumerTest {
     void whenConverterDtoToConsumerThenReturnConsumer(){
         DtoMapperConsumer mapper = new DtoMapperConsumer();
         Consumer consumer = mapper.toConsumer(ConsumerDTOTest.newConsumerDTORight());
-        Consumer expectConsumer = ConsumerTest.newConsumerWithoutIIUDandDateTime();
+        Consumer expectConsumer = newConsumerWithoutIIUDandDateTime();
 
         assertAll("expectedConsumer",
             () -> assertEquals(expectConsumer.getIdConsumer(), consumer.getIdConsumer()),

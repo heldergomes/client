@@ -14,7 +14,6 @@ import java.util.UUID;
 public class ConsumerEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idConsumer;
     private String firstName;
     private String lastName;

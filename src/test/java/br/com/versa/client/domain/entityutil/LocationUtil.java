@@ -1,8 +1,10 @@
-package br.com.versa.client.domain.business;
+package br.com.versa.client.domain.entityutil;
+
+import br.com.versa.client.domain.business.Location;
 
 import java.util.UUID;
 
-public class LocationTest {
+public class LocationUtil {
 
     public static Location newLocationWithoutUUID(){
         Location location = new Location();

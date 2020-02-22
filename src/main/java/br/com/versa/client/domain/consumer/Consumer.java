@@ -10,13 +10,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class Consumer {
-
-    private ValidExistenceOfConsumerPort validExistenceOfConsumerPort;
-    public Consumer(ValidExistenceOfConsumerPort validExistenceOfConsumerPort){
-        this.validExistenceOfConsumerPort = validExistenceOfConsumerPort;
-    }
 
     private UUID idConsumer;
     private String firstName;
@@ -27,17 +21,24 @@ public class Consumer {
     private String confirmPassword;
     private LocalDateTime dateTimeCreatedConsumer;
 
+    private ValidExistenceOfConsumerPort validExistenceOfConsumerPort;
+    private CreateNewConsumerPort createNewConsumerPort;
 
-    public void isRightPassword(){
+
+    public void validExistenceOfConsumer(UUID idConsumer){
+        validExistenceOfConsumerPort.validConsumerAlreadyExist(idConsumer);
+    }
+
+    public UUID registerNewConsumer(){
+        isRightPassword();
+        setIdConsumer(UUID.randomUUID());
+        setDateTimeCreatedConsumer(LocalDateTime.now());
+        createNewConsumerPort.createNewConsumer(this);
+        return getIdConsumer();
+    }
+
+    private void isRightPassword(){
         if (!getConfirmPassword().equals(getPassword()))
             throw new InvalidConfirmPasswordException("The confirmPassword is different to password");
-    }
-
-    public void generateDateTimeCreateConsumer(){
-        setDateTimeCreatedConsumer(LocalDateTime.now());
-    }
-
-    public void validExistenceOfConsumer(){
-        validExistenceOfConsumerPort.validConsumerAlreadyExist(this.idConsumer);
     }
 }

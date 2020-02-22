@@ -21,10 +21,9 @@ public class ConsumerAdapter implements CreateNewConsumerPort, ValidExistenceOfC
     }
 
     @Override
-    public UUID createNewConsumer(Consumer consumer) {
+    public void createNewConsumer(Consumer consumer) {
         ConsumerEntity consumerEntity = mapper.toConsumerEntity(consumer);
-        ConsumerEntity consumerInserted = repository.save(consumerEntity);
-        return consumerInserted.getIdConsumer();
+        repository.save(consumerEntity);
     }
 
     @Override

@@ -11,9 +11,10 @@ import org.mockito.MockitoAnnotations;
 import java.util.Optional;
 import java.util.UUID;
 
+import static br.com.versa.client.domain.entityutil.ConsumerUtil.newConsumerWithoutIIUD;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @DisplayName("Testing Consumer Adapter")
 class ConsumerAdapterTest {
@@ -23,18 +24,19 @@ class ConsumerAdapterTest {
     @Mock
     private ConsumerRepository repository;
 
-    @DisplayName("When persist one new Consumer then return one Id Consumer")
+    @DisplayName("When persist one new Consumer then verify all methods")
     @Test
-    void WhenCreateNewConsumerThenReturnUUIDConsumer(){
+    void WhenCreateNewConsumerThenVerifyAllMethods(){
         MockitoAnnotations.initMocks(this);
         ConsumerEntity consumerEntity = ConsumerEntityTest.newConsumerEntity();
         when(mapper.toConsumerEntity(any(Consumer.class))).thenReturn(consumerEntity);
         when(repository.save(any(ConsumerEntity.class))).thenReturn(consumerEntity);
 
         ConsumerAdapter adapter = new ConsumerAdapter(mapper, repository);
-        UUID idConsumer = adapter.createNewConsumer(ConsumerTest.newConsumerWithoutIIUD());
+        adapter.createNewConsumer(newConsumerWithoutIIUD());
 
-        assertEquals(idConsumer, consumerEntity.getIdConsumer());
+        verify(mapper, times(1)).toConsumerEntity(any(Consumer.class));
+        verify(repository, times(1)).save(any(ConsumerEntity.class));
     }
 
     @DisplayName("When Consumer don't exist then return an Exception")

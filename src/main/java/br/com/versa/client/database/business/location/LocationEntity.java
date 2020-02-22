@@ -13,7 +13,6 @@ import java.util.UUID;
 public class LocationEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID IdLocation;
     private UUID idBusiness;
     private String state;

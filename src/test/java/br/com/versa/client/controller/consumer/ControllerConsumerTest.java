@@ -1,8 +1,7 @@
 package br.com.versa.client.controller.consumer;
 
 import br.com.versa.client.domain.consumer.Consumer;
-import br.com.versa.client.domain.consumer.ConsumerTest;
-import br.com.versa.client.domain.consumer.RegisterConsumer;
+import br.com.versa.client.domain.consumer.CreateNewConsumerPort;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -12,9 +11,10 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.UUID;
 
+import static br.com.versa.client.domain.entityutil.ConsumerUtil.newConsumerWithoutIIUD;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @DisplayName("Testing Controller Consumer")
 class ControllerConsumerTest {
@@ -22,33 +22,31 @@ class ControllerConsumerTest {
     @Mock
     private DtoMapperConsumer mapperConsumer;
     @Mock
-    private RegisterConsumer registerConsumer;
+    private CreateNewConsumerPort createNewConsumerPort;
 
     @DisplayName("When created new consumer then return an consumer created")
     @Test
     void WhenCreateNewConsumerThenReturnHttpStatusCreated(){
         MockitoAnnotations.initMocks(this);
-        when(mapperConsumer.toConsumer(any(ConsumerDTO.class))).thenReturn(ConsumerTest.newConsumerWithoutIIUD());
-        when(registerConsumer.registerNewConsumer(any(Consumer.class))).thenReturn(UUID.randomUUID());
+        when(mapperConsumer.toConsumer(any(ConsumerDTO.class))).thenReturn(newConsumerWithoutIIUD());
 
-        ControllerConsumer controller = new ControllerConsumer(mapperConsumer, registerConsumer);
+        ControllerConsumer controller = new ControllerConsumer(mapperConsumer, createNewConsumerPort);
         ResponseEntity response = controller.createNewConsumer(ConsumerDTOTest.newConsumerDTORight());
 
         assertEquals(response.getStatusCode(), HttpStatus.CREATED);
     }
 
-    @DisplayName("When created new consumer then return an Id consumer")
+    @DisplayName("When created new consumer then verify all methods")
     @Test
-    void WhenCreateNewConsumerThenReturnConsumerIIUD(){
+    void WhenCreateNewConsumerThenVerifyAllMethods(){
         MockitoAnnotations.initMocks(this);
-        UUID newConsumerIIUD = UUID.randomUUID();
-        when(mapperConsumer.toConsumer(any(ConsumerDTO.class))).thenReturn(ConsumerTest.newConsumerWithoutIIUD());
-        when(registerConsumer.registerNewConsumer(any(Consumer.class))).thenReturn(newConsumerIIUD);
+        when(mapperConsumer.toConsumer(any(ConsumerDTO.class))).thenReturn(newConsumerWithoutIIUD());
 
-        ControllerConsumer controller = new ControllerConsumer(mapperConsumer, registerConsumer);
+        ControllerConsumer controller = new ControllerConsumer(mapperConsumer, createNewConsumerPort);
         ResponseEntity response = controller.createNewConsumer(ConsumerDTOTest.newConsumerDTORight());
 
-        assertEquals(response.getBody(), newConsumerIIUD);
+        verify(mapperConsumer, times(1)).toConsumer(any(ConsumerDTO.class));
+        verify(createNewConsumerPort, times(1)).createNewConsumer(any(Consumer.class));
     }
 
 }

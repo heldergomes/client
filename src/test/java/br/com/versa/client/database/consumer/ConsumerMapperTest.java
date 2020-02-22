@@ -5,6 +5,7 @@ import br.com.versa.client.domain.consumer.ConsumerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static br.com.versa.client.domain.entityutil.ConsumerUtil.newConsumerWithoutIIUD;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -15,7 +16,7 @@ class ConsumerMapperTest {
     @Test
     void WhenMapperConsumerToConsumerEntityThenReturnNewConsumerEntity(){
         ConsumerMapper mapper = new ConsumerMapper();
-        Consumer consumer = ConsumerTest.newConsumerWithoutIIUD();
+        Consumer consumer = newConsumerWithoutIIUD();
         ConsumerEntity consumerEntity = mapper.toConsumerEntity(consumer);
 
         assertAll("consumerEntity",
